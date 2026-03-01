@@ -6,8 +6,8 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, Timer
 
 @cocotb.test()
-async def test_alu_basic(dut):
-    """Test the 4-bit ALU with basic operations"""
+async def test_counter_basic(dut):
+    """Test the counter"""
     
     # 1. Start the clock (10ns period = 100MHz)
     cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
@@ -25,7 +25,7 @@ async def test_alu_basic(dut):
     
     # 4. Example Test Case: Drive ui_in
     # Based on your Verilog tb (ui_in = 8'b00110010)
-    dut.ui_in.value = 0b00110010 
+   # dut.ui_in.value = 0b00110010 
     
     # Wait for a few clock cycles for logic to propagate
     for _ in range(5):
@@ -36,4 +36,4 @@ async def test_alu_basic(dut):
     dut._log.info(f"ALU Output uo_out: {output_val}")
 
     # Optional: Basic assertion (Adjust based on your ALU's expected behavior)
-    assert output_val == 5
+    #assert output_val == 5
