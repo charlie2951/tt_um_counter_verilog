@@ -5,7 +5,7 @@
 
 `default_nettype none
 
-module tt_um_charlie2951_alu4bit (
+module tt_um_charlie2951_counter8bit (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
@@ -23,14 +23,14 @@ module tt_um_charlie2951_alu4bit (
    
 
   // List all unused inputs to prevent warnings
-    wire _unused = &{ena,uio_in[3],uio_in[4],uio_in[5],uio_in[6],uio_in[7], 1'b0};
+    wire _unused = &{ena,uio_in,ui_in, 1'b0};
 
-    alu alu0(
-        .rst(!rst_n),
-        .clk(clk),
-        .A(ui_in[3:0]),
-        .B(ui_in[7:4]),
-        .op(uio_in[2:0]),
-        .result(uo_out)
-    );
+    reg [7:0] count;
+    always @(posedge clk) begin
+        if(!rst_n)
+            count <= 0;
+        else
+            count <= count + 1'b1;
+    end
+    assign uo_out = count;
 endmodule
